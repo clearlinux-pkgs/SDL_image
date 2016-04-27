@@ -4,7 +4,7 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 1
+Release  : 4
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -14,7 +14,6 @@ Requires: SDL_image-lib
 BuildRequires : SDL-dev
 BuildRequires : libjpeg-turbo-dev
 BuildRequires : pkgconfig(libpng)
-BuildRequires : tiff-dev
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -39,7 +38,6 @@ lib components for the SDL_image package.
 
 
 %prep
-cd ..
 %setup -q -n SDL_image-1.2.12
 
 %build
