@@ -4,7 +4,7 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 7
+Release  : 8
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -63,9 +63,10 @@ rm -rf %{buildroot}
 %files dev
 %defattr(-,root,root,-)
 /usr/include/SDL/SDL_image.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libSDL_image.so
+/usr/lib64/pkgconfig/SDL_image.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libSDL_image-1.2.so.0
+/usr/lib64/libSDL_image-1.2.so.0.8.4
