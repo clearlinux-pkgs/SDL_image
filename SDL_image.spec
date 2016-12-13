@@ -4,7 +4,7 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 8
+Release  : 9
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -12,7 +12,16 @@ Group    : Development/Tools
 License  : BSD-3-Clause IJG Libpng Zlib libtiff
 Requires: SDL_image-lib
 BuildRequires : SDL-dev
+BuildRequires : SDL-dev32
+BuildRequires : gcc-dev32
+BuildRequires : gcc-libgcc32
+BuildRequires : gcc-libstdc++32
+BuildRequires : glibc-dev32
+BuildRequires : glibc-libc32
 BuildRequires : libjpeg-turbo-dev
+BuildRequires : libwebp-dev32
+BuildRequires : pkgconfig(32libpng)
+BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 
@@ -30,6 +39,16 @@ Provides: SDL_image-devel
 dev components for the SDL_image package.
 
 
+%package dev32
+Summary: dev32 components for the SDL_image package.
+Group: Default
+Requires: SDL_image-lib32
+Requires: SDL_image-dev
+
+%description dev32
+dev32 components for the SDL_image package.
+
+
 %package lib
 Summary: lib components for the SDL_image package.
 Group: Libraries
@@ -38,14 +57,33 @@ Group: Libraries
 lib components for the SDL_image package.
 
 
+%package lib32
+Summary: lib32 components for the SDL_image package.
+Group: Default
+
+%description lib32
+lib32 components for the SDL_image package.
+
+
 %prep
 %setup -q -n SDL_image-1.2.12
+pushd ..
+cp -a SDL_image-1.2.12 build32
+popd
 
 %build
 export LANG=C
 %configure --disable-static
 make V=1  %{?_smp_mflags}
 
+pushd ../build32/
+export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export CFLAGS="$CFLAGS -m32"
+export CXXFLAGS="$CXXFLAGS -m32"
+export LDFLAGS="$LDFLAGS -m32"
+%configure --disable-static   --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+make V=1  %{?_smp_mflags}
+popd
 %check
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
@@ -55,6 +93,15 @@ make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
 rm -rf %{buildroot}
+pushd ../build32/
+%make_install32
+if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
+then
+pushd %{buildroot}/usr/lib32/pkgconfig
+for i in *.pc ; do ln -s $i 32$i ; done
+popd
+fi
+popd
 %make_install
 
 %files
@@ -66,7 +113,18 @@ rm -rf %{buildroot}
 /usr/lib64/libSDL_image.so
 /usr/lib64/pkgconfig/SDL_image.pc
 
+%files dev32
+%defattr(-,root,root,-)
+/usr/lib32/libSDL_image.so
+/usr/lib32/pkgconfig/32SDL_image.pc
+/usr/lib32/pkgconfig/SDL_image.pc
+
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libSDL_image-1.2.so.0
 /usr/lib64/libSDL_image-1.2.so.0.8.4
+
+%files lib32
+%defattr(-,root,root,-)
+/usr/lib32/libSDL_image-1.2.so.0
+/usr/lib32/libSDL_image-1.2.so.0.8.4
