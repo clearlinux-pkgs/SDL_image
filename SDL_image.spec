@@ -4,7 +4,7 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 13
+Release  : 14
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
