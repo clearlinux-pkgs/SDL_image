@@ -1,0 +1,4 @@
+Configure miss: tiffio.h usability
+Configure miss: tiffio.h presence
+Configure miss: tiffio.h
+Configure miss: TIFFClientOpen in -ltiff
