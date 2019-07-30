@@ -4,10 +4,10 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 18
+Release  : 19
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
-Summary  : A simple library to load images of various formats as SDL surfaces
+Summary  : Simple DirectMedia Layer - Sample Image Loading Library
 Group    : Development/Tools
 License  : BSD-3-Clause IJG Libpng Zlib libtiff
 Requires: SDL_image-lib = %{version}-%{release}
@@ -25,6 +25,7 @@ BuildRequires : pkgconfig(32libwebp)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 Patch1: CVE-2018-3977.patch
+Patch2: CVE-2019-13616.patch
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -80,6 +81,7 @@ license components for the SDL_image package.
 %prep
 %setup -q -n SDL_image-1.2.12
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a SDL_image-1.2.12 build32
 popd
@@ -88,15 +90,16 @@ popd
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1557076742
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1564515636
+export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
-export FCFLAGS="$CFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
-export FFLAGS="$CFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
-export CXXFLAGS="$CXXFLAGS -O3 -fcf-protection=full -ffat-lto-objects -flto=4 -fstack-protector-strong "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -mzero-caller-saved-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -110,7 +113,7 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 make  %{?_smp_mflags}
 popd
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
@@ -119,7 +122,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1557076742
+export SOURCE_DATE_EPOCH=1564515636
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL_image
 cp COPYING %{buildroot}/usr/share/package-licenses/SDL_image/COPYING
