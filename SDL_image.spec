@@ -4,7 +4,7 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 19
+Release  : 20
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -26,6 +26,7 @@ BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 Patch1: CVE-2018-3977.patch
 Patch2: CVE-2019-13616.patch
+Patch3: CVE-2019-7635.patch
 
 %description
 This is a simple library to load images of various formats as SDL surfaces.
@@ -82,6 +83,7 @@ license components for the SDL_image package.
 %setup -q -n SDL_image-1.2.12
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 pushd ..
 cp -a SDL_image-1.2.12 build32
 popd
@@ -91,7 +93,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1564515636
+export SOURCE_DATE_EPOCH=1564516269
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -122,7 +124,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1564515636
+export SOURCE_DATE_EPOCH=1564516269
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL_image
 cp COPYING %{buildroot}/usr/share/package-licenses/SDL_image/COPYING
