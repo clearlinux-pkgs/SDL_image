@@ -4,7 +4,7 @@
 #
 Name     : SDL_image
 Version  : 1.2.12
-Release  : 24
+Release  : 25
 URL      : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Source0  : https://www.libsdl.org/projects/SDL_image/release/SDL_image-1.2.12.tar.gz
 Summary  : Simple DirectMedia Layer - Sample Image Loading Library
@@ -13,7 +13,6 @@ License  : BSD-3-Clause IJG Libpng Zlib libtiff
 Requires: SDL_image-lib = %{version}-%{release}
 Requires: SDL_image-license = %{version}-%{release}
 BuildRequires : libjpeg-turbo-dev
-BuildRequires : pkg-config
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(libwebp)
 BuildRequires : pkgconfig(sdl)
@@ -65,15 +64,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1600306948
+export SOURCE_DATE_EPOCH=1664907452
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FCFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export FFLAGS="$FFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=auto -fstack-protector-strong -fzero-call-used-regs=used "
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -85,21 +84,21 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1600306948
+export SOURCE_DATE_EPOCH=1664907452
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/SDL_image
-cp %{_builddir}/SDL_image-1.2.12/COPYING %{buildroot}/usr/share/package-licenses/SDL_image/2aae6dd699d8e0d16b49d24a30009c7a3da2def8
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x64/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL_image/a71cd60ec9888ad7a814fa8ffa31e62cb0a84e4c
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x64/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL_image/fd071d8295b7ac1d4e235f5fa7d60fee3477efef
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x64/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL_image/023453b0b577b6ae8e7c2f7103bd53134a974605
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x64/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL_image/e46fe797dca4da720ef37e1f3f2d15f26b21f7d1
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x64/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL_image/0aec4a494ca434e2d474b375e903d6c09da2a8fe
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x86/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL_image/a71cd60ec9888ad7a814fa8ffa31e62cb0a84e4c
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x86/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL_image/fd071d8295b7ac1d4e235f5fa7d60fee3477efef
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL_image/023453b0b577b6ae8e7c2f7103bd53134a974605
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL_image/e46fe797dca4da720ef37e1f3f2d15f26b21f7d1
-cp %{_builddir}/SDL_image-1.2.12/VisualC/external/lib/x86/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL_image/0aec4a494ca434e2d474b375e903d6c09da2a8fe
-cp %{_builddir}/SDL_image-1.2.12/Xcode/Frameworks/webp.framework/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL_image/ff9a03d09711ea3f630767985780e5b279f45dd8
+cp %{_builddir}/SDL_image-%{version}/COPYING %{buildroot}/usr/share/package-licenses/SDL_image/2aae6dd699d8e0d16b49d24a30009c7a3da2def8 || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x64/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL_image/a71cd60ec9888ad7a814fa8ffa31e62cb0a84e4c || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x64/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL_image/fd071d8295b7ac1d4e235f5fa7d60fee3477efef || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x64/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL_image/023453b0b577b6ae8e7c2f7103bd53134a974605 || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x64/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL_image/e46fe797dca4da720ef37e1f3f2d15f26b21f7d1 || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x64/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL_image/0aec4a494ca434e2d474b375e903d6c09da2a8fe || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x86/LICENSE.jpeg.txt %{buildroot}/usr/share/package-licenses/SDL_image/a71cd60ec9888ad7a814fa8ffa31e62cb0a84e4c || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x86/LICENSE.png.txt %{buildroot}/usr/share/package-licenses/SDL_image/fd071d8295b7ac1d4e235f5fa7d60fee3477efef || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x86/LICENSE.tiff.txt %{buildroot}/usr/share/package-licenses/SDL_image/023453b0b577b6ae8e7c2f7103bd53134a974605 || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x86/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL_image/e46fe797dca4da720ef37e1f3f2d15f26b21f7d1 || :
+cp %{_builddir}/SDL_image-%{version}/VisualC/external/lib/x86/LICENSE.zlib.txt %{buildroot}/usr/share/package-licenses/SDL_image/0aec4a494ca434e2d474b375e903d6c09da2a8fe || :
+cp %{_builddir}/SDL_image-%{version}/Xcode/Frameworks/webp.framework/LICENSE.webp.txt %{buildroot}/usr/share/package-licenses/SDL_image/ff9a03d09711ea3f630767985780e5b279f45dd8 || :
 %make_install
 
 %files

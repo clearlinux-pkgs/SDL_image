@@ -1,6 +1,6 @@
-Configure miss: windres
-Configure miss: linux-gnu-windres
-Configure miss: tiffio.h usability
-Configure miss: tiffio.h presence
-Configure miss: tiffio.h
 Configure miss: TIFFClientOpen in -ltiff
+Configure miss: linux-gnu-windres
+Configure miss: tiffio.h
+Configure miss: tiffio.h presence
+Configure miss: tiffio.h usability
+Configure miss: windres
